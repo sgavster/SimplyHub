@@ -1,0 +1,56 @@
+######################################################
+#              SimplyHub Config File                 #
+######################################################
+#set to true or false                                
+compass_on_spawn: true                           
+compass_enabled: true
+torch_on_spawn: true
+torch_enabled: true                        
+allow_player_pop: true
+hat_on_spawn: true
+allow_hats: true
+#######################################################
+#Supports color codes
+compass_name: '&6Teleportation'
+compass_item_name_1: '&6Soon'
+compass_item_name_2: '&bSoon'
+compass_item_name_3: '&aSoon'
+compass_item_name_4: '&3Soon'
+compass_item_name_5: '&5Soon'
+compass_item_name_6: '&8Soon'
+compass_item_name_7: '&9Soon'
+compass_item_name_8: '&1Soon'
+compass_item_name_9: '&2Soon'
+compass_item_lore_1: '&6Soon'
+compass_item_lore_2: '&bSoon'
+compass_item_lore_3: '&aSoon'
+compass_item_lore_4: '&3Soon'
+compass_item_lore_5: '&5Soon'
+compass_item_lore_6: '&8Soon'
+compass_item_lore_7: '&9Soon'
+compass_item_lore_8: '&1Soon'
+compass_item_lore_9: '&2Soon'
+toggle_players_torch_on_name: '&6Hide players'
+toggle_players_torch_off_name: '&6Show players'
+toggle_players_torch_on_lore: '&cRight click to use'
+toggle_players_torch_off_lore: '&cRight click to use'
+#DO NOT ADD A / UNLESS THE COMMAND USES '//'.
+compass_item_command_1: 'spawn'
+compass_item_command_2: 'command2'
+compass_item_command_3: 'command3'
+compass_item_command_4: 'command4'
+compass_item_command_5: 'command5'
+compass_item_command_6: 'command6'
+compass_item_command_7: 'command7'
+compass_item_command_8: 'command8'
+compass_item_command_9: 'command9'
+#########################################################
+#Messages:
+pop_player_message: '&4POP!'
+hide_players_message: '&6You can no longer see players!'
+show_players_message: '&6You can now see players!'
+torch_on_cooldown_message: '&4You must wait to toggle players!'
+##########################################################
+#Other:
+#The torch delay is in TICKS!!!!! 20 ticks = 1 second.
+torch_delay: 100
