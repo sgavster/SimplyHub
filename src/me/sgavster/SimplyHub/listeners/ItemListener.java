@@ -34,7 +34,7 @@ public class ItemListener implements Listener
 	
 	public ItemStack onTorch()
 	{
-		ItemStack t = new ItemStack(Material.REDSTONE_TORCH_OFF);
+		ItemStack t = new ItemStack(Material.REDSTONE_TORCH_ON);
 		ItemMeta i = t.getItemMeta();
 		i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_on_name")));
 		i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_on_lore"))));
