@@ -1,11 +1,15 @@
 package me.sgavster.SimplyHub.listeners;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
 
 import me.sgavster.SimplyHub.SimplyHub;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -139,6 +143,7 @@ public class CompassListener implements Listener
 		}
 	}
 
+	private World w;
 
 	@EventHandler
 	public void onClick(InventoryClickEvent e)
@@ -155,42 +160,57 @@ public class CompassListener implements Listener
 					{
 						if(e.getCurrentItem().getItemMeta().hasDisplayName())
 						{
-							e.setCancelled(true);
-							if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_1"))))
+							List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+							for(String s : list)
 							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_1"));
+								try
+								{
+									w = Bukkit.getWorld(s);
+								}
+								catch (Exception ex)
+								{
+									Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
+								}
 							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_2"))))
+							if(p.getWorld().equals(w))
 							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_2"));
-							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_3"))))
-							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_3"));
-							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_4"))))
-							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_4"));
-							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_5"))))
-							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_5"));
-							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_6"))))
-							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_6"));
-							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_7"))))
-							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_7"));
-							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_8"))))
-							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_8"));
-							}
-							else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_9"))))
-							{
-								p.chat("/" + plugin.getConfig().getString("compass_item_command_9"));
+								e.setCancelled(true);
+								if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_1"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_1"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_2"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_2"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_3"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_3"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_4"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_4"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_5"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_5"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_6"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_6"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_7"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_7"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_8"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_8"));
+								}
+								else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_9"))))
+								{
+									p.chat("/" + plugin.getConfig().getString("compass_item_command_9"));
+								}
 							}
 						}
 					}

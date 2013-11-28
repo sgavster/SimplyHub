@@ -2,6 +2,8 @@ package me.sgavster.SimplyHub.listeners;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
 
 import me.sgavster.SimplyHub.SimplyHub;
 
@@ -9,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,6 +55,8 @@ public class TogglePlayerListener implements Listener
 		return t;
 	}
 
+	private World w;
+	
 	@EventHandler
 	public void onToggle(PlayerInteractEvent e)
 	{
@@ -62,62 +67,77 @@ public class TogglePlayerListener implements Listener
 			{
 				if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_ON)
 				{
-					if(!h.contains(p.getName()))
+					List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+					for(String s : list)
 					{
-						h.add(p.getName());
-					}
-					e.setCancelled(true);
-					if(!c.contains(p.getName()))
-					{
-						for(Player o : Bukkit.getOnlinePlayers())
+						try
 						{
-							p.hidePlayer(o);
-							p.setItemInHand(offTorch());
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("hide_players_message")));
-							c.add(p.getName());
-							p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
-							Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-							{
-								public void run()
-								{
-									c.remove(p.getName());
-								}
-							}, plugin.getConfig().getInt("torch_delay"));
+							w = Bukkit.getWorld(s);
+						}
+						catch (Exception ex)
+						{
+							Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
 						}
 					}
-					else
+					if(p.getWorld().equals(w))
 					{
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
-					}
-				}
-				else if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_OFF)
-				{
-					if(!h.contains(p.getName()))
-					{
-						h.add(p.getName());
-					}
-					e.setCancelled(true);
-					if(!c.contains(p.getName()))
-					{
-						for(Player o : Bukkit.getOnlinePlayers())
+						if(!h.contains(p.getName()))
 						{
-							p.showPlayer(o);
-							p.setItemInHand(onTorch());
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
-							c.add(p.getName());
-							p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
-							Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
+							h.add(p.getName());
+						}
+						e.setCancelled(true);
+						if(!c.contains(p.getName()))
+						{
+							for(Player o : Bukkit.getOnlinePlayers())
 							{
-								public void run()
+								p.hidePlayer(o);
+								p.setItemInHand(offTorch());
+								p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("hide_players_message")));
+								c.add(p.getName());
+								p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
+								Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
 								{
-									c.remove(p.getName());
-								}
-							}, plugin.getConfig().getInt("torch_delay"));
+									public void run()
+									{
+										c.remove(p.getName());
+									}
+								}, plugin.getConfig().getInt("torch_delay"));
+							}
+						}
+						else
+						{
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
 						}
 					}
-					else
+					else if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_OFF)
 					{
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
+						if(!h.contains(p.getName()))
+						{
+							h.add(p.getName());
+						}
+						e.setCancelled(true);
+						if(!c.contains(p.getName()))
+						{
+							for(Player o : Bukkit.getOnlinePlayers())
+							{
+								p.showPlayer(o);
+								p.setItemInHand(onTorch());
+								p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
+								c.add(p.getName());
+								p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
+								Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
+								{
+									public void run()
+									{
+										c.remove(p.getName());
+									}
+								}, plugin.getConfig().getInt("torch_delay"));
+							}
+						}
+						else
+						{
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
+						}
 					}
 				}
 			}
