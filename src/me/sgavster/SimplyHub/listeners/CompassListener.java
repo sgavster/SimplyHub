@@ -113,6 +113,8 @@ public class CompassListener implements Listener
 		is.setItemMeta(im);
 		return is;
 	}
+	
+	private World w;
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e)
@@ -125,25 +127,39 @@ public class CompassListener implements Listener
 				if(p.getItemInHand().getType() == Material.COMPASS)
 				{
 
-					compass = Bukkit.createInventory(p, 9, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_name")));
+					List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+					for(String s : list)
+					{
+						try
+						{
+							w = Bukkit.getWorld(s);
+						}
+						catch (Exception ex)
+						{
+							Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
+						}
+					}
+					if(p.getWorld().equals(w))
+					{
 
-					compass.setItem(0, compassItem1());
-					compass.setItem(1, compassItem2());
-					compass.setItem(2, compassItem3());
-					compass.setItem(3, compassItem4());
-					compass.setItem(4, compassItem5());
-					compass.setItem(5, compassItem6());
-					compass.setItem(6, compassItem7());
-					compass.setItem(7, compassItem8());
-					compass.setItem(8, compassItem9());
+						compass = Bukkit.createInventory(p, 9, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_name")));
 
-					p.openInventory(compass);
+						compass.setItem(0, compassItem1());
+						compass.setItem(1, compassItem2());
+						compass.setItem(2, compassItem3());
+						compass.setItem(3, compassItem4());
+						compass.setItem(4, compassItem5());
+						compass.setItem(5, compassItem6());
+						compass.setItem(6, compassItem7());
+						compass.setItem(7, compassItem8());
+						compass.setItem(8, compassItem9());
+
+						p.openInventory(compass);
+					}
 				}
 			}
 		}
 	}
-
-	private World w;
 
 	@EventHandler
 	public void onClick(InventoryClickEvent e)
