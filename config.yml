@@ -55,5 +55,5 @@ torch_on_cooldown_message: '&4You must wait to toggle players!'
 #The torch delay is in TICKS!!!!! 20 ticks = 1 second.
 torch_delay: 100
 #This is a list. This needs SPACES. Not tabs
-Enabled_Worlds
+Enabled_Worlds:
   - 'world'

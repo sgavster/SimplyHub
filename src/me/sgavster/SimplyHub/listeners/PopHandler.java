@@ -3,6 +3,7 @@ package me.sgavster.SimplyHub.listeners;
 import java.util.List;
 import java.util.logging.Level;
 
+import me.sgavster.SimplyHub.FireworkEffectPlayer;
 import me.sgavster.SimplyHub.SimplyHub;
 
 import org.bukkit.Bukkit;
@@ -13,13 +14,11 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.meta.FireworkMeta;
 
 public class PopHandler implements Listener
 {
@@ -32,6 +31,7 @@ public class PopHandler implements Listener
 	}
 
 	private World w;
+	FireworkEffectPlayer f = new FireworkEffectPlayer();
 
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent e)
@@ -56,10 +56,14 @@ public class PopHandler implements Listener
 				Player p = (Player) e.getEntity();
 				if(p.getWorld().equals(w))
 				{
-					Firework f = (Firework) p.getWorld().spawn(p.getLocation(), Firework.class);
-					FireworkMeta fm = f.getFireworkMeta();
-					fm.addEffect(FireworkEffect.builder().flicker(false).trail(false).with(Type.BURST).withColor(Color.GREEN).withFade(Color.BLUE).build());
-					f.setFireworkMeta(fm);
+					try 
+					{
+						f.playFirework(d.getWorld(), d.getLocation(), FireworkEffect.builder().flicker(false).trail(false).with(Type.BURST).withColor(Color.ORANGE).withFade(Color.GREEN).build());
+					} 
+					catch (Exception e1) 
+					{
+						e1.printStackTrace();
+					}
 					d.getWorld().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 1);
 					d.getWorld().playEffect(p.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
 					d.getWorld().playEffect(p.getLocation(), Effect.SMOKE, 1);

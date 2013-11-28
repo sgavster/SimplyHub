@@ -56,7 +56,7 @@ public class TogglePlayerListener implements Listener
 	}
 
 	private World w;
-	
+
 	@EventHandler
 	public void onToggle(PlayerInteractEvent e)
 	{
@@ -65,21 +65,21 @@ public class TogglePlayerListener implements Listener
 		{
 			if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
 			{
-				if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_ON)
+				List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+				for(String s : list)
 				{
-					List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
-					for(String s : list)
+					try
 					{
-						try
-						{
-							w = Bukkit.getWorld(s);
-						}
-						catch (Exception ex)
-						{
-							Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
-						}
+						w = Bukkit.getWorld(s);
 					}
-					if(p.getWorld().equals(w))
+					catch (Exception ex)
+					{
+						Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
+					}
+				}
+				if(p.getWorld().equals(w))
+				{
+					if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_ON)
 					{
 						if(!h.contains(p.getName()))
 						{
