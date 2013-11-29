@@ -55,8 +55,6 @@ public class TogglePlayerListener implements Listener
 		return t;
 	}
 
-	private World w;
-
 	@EventHandler
 	public void onToggle(PlayerInteractEvent e)
 	{
@@ -70,74 +68,74 @@ public class TogglePlayerListener implements Listener
 				{
 					try
 					{
-						w = Bukkit.getWorld(s);
+						World w = Bukkit.getWorld(s);
+						if(p.getWorld().equals(w))
+						{
+							if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_ON)
+							{
+								if(!h.contains(p.getName()))
+								{
+									h.add(p.getName());
+								}
+								e.setCancelled(true);
+								if(!c.contains(p.getName()))
+								{
+									for(Player o : Bukkit.getOnlinePlayers())
+									{
+										p.hidePlayer(o);
+										p.setItemInHand(offTorch());
+										p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("hide_players_message")));
+										c.add(p.getName());
+										p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
+										Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
+										{
+											public void run()
+											{
+												c.remove(p.getName());
+											}
+										}, plugin.getConfig().getInt("torch_delay") * 20);
+									}
+								}
+								else
+								{
+									p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
+								}
+							}
+							else if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_OFF)
+							{
+								if(!h.contains(p.getName()))
+								{
+									h.add(p.getName());
+								}
+								e.setCancelled(true);
+								if(!c.contains(p.getName()))
+								{
+									for(Player o : Bukkit.getOnlinePlayers())
+									{
+										p.showPlayer(o);
+										p.setItemInHand(onTorch());
+										p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
+										c.add(p.getName());
+										p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
+										Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
+										{
+											public void run()
+											{
+												c.remove(p.getName());
+											}
+										}, plugin.getConfig().getInt("torch_delay") * 20);
+									}
+								}
+								else
+								{
+									p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
+								}
+							}
+						}
 					}
 					catch (Exception ex)
 					{
 						Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
-					}
-				}
-				if(p.getWorld().equals(w))
-				{
-					if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_ON)
-					{
-						if(!h.contains(p.getName()))
-						{
-							h.add(p.getName());
-						}
-						e.setCancelled(true);
-						if(!c.contains(p.getName()))
-						{
-							for(Player o : Bukkit.getOnlinePlayers())
-							{
-								p.hidePlayer(o);
-								p.setItemInHand(offTorch());
-								p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("hide_players_message")));
-								c.add(p.getName());
-								p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
-								Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-								{
-									public void run()
-									{
-										c.remove(p.getName());
-									}
-								}, plugin.getConfig().getInt("torch_delay"));
-							}
-						}
-						else
-						{
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
-						}
-					}
-					else if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_OFF)
-					{
-						if(!h.contains(p.getName()))
-						{
-							h.add(p.getName());
-						}
-						e.setCancelled(true);
-						if(!c.contains(p.getName()))
-						{
-							for(Player o : Bukkit.getOnlinePlayers())
-							{
-								p.showPlayer(o);
-								p.setItemInHand(onTorch());
-								p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
-								c.add(p.getName());
-								p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
-								Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-								{
-									public void run()
-									{
-										c.remove(p.getName());
-									}
-								}, plugin.getConfig().getInt("torch_delay"));
-							}
-						}
-						else
-						{
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
-						}
 					}
 				}
 			}

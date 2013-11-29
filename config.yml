@@ -9,6 +9,15 @@ torch_enabled: true
 allow_player_pop: true
 hat_on_spawn: true
 allow_hats: true
+compass_item_1_enabled: true
+compass_item_2_enabled: true
+compass_item_3_enabled: true
+compass_item_4_enabled: true
+compass_item_5_enabled: true
+compass_item_6_enabled: true
+compass_item_7_enabled: true
+compass_item_8_enabled: true
+compass_item_9_enabled: true
 #######################################################
 #Supports color codes
 compass_name: '&6Teleportation'
@@ -35,7 +44,7 @@ toggle_players_torch_off_name: '&6Show players'
 toggle_players_torch_on_lore: '&cRight click to use'
 toggle_players_torch_off_lore: '&cRight click to use'
 #DO NOT ADD A / UNLESS THE COMMAND USES '//'.
-compass_item_command_1: 'spawn'
+compass_item_command_1: 'command1'
 compass_item_command_2: 'command2'
 compass_item_command_3: 'command3'
 compass_item_command_4: 'command4'
@@ -51,9 +60,21 @@ hide_players_message: '&6You can no longer see players!'
 show_players_message: '&6You can now see players!'
 torch_on_cooldown_message: '&4You must wait to toggle players!'
 ##########################################################
+#Item Types:
+#A list of all VALID items: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html 
+#Caps do not matter. If you enter an invalid material, it will go to the default; ENDER_PEARL.
+compass_item_1: 'ENDER_PEARL'
+compass_item_2: 'ENDER_PEARL'
+compass_item_3: 'ENDER_PEARL'
+compass_item_4: 'ENDER_PEARL'
+compass_item_5: 'ENDER_PEARL'
+compass_item_6: 'ENDER_PEARL'
+compass_item_7: 'ENDER_PEARL'
+compass_item_8: 'ENDER_PEARL'
+compass_item_9: 'ENDER_PEARL'
 #Other:
-#The torch delay is in TICKS!!!!! 20 ticks = 1 second.
-torch_delay: 100
+#The torch delay is in seconds.
+torch_delay: 5
 #This is a list. This needs SPACES. Not tabs
 Enabled_Worlds:
   - 'world'

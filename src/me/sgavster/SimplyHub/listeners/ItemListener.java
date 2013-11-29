@@ -45,8 +45,6 @@ public class ItemListener implements Listener
 		t.setItemMeta(i);
 		return t;
 	}
-	
-	private World w;
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
@@ -57,24 +55,24 @@ public class ItemListener implements Listener
 		{
 			try
 			{
-				w = Bukkit.getWorld(s);
+				World w = Bukkit.getWorld(s);
+				if(p.getWorld().equals(w))
+				{
+					if(plugin.getConfig().getBoolean("compass_on_spawn"))
+					{
+						p.getInventory().clear();
+						p.getInventory().addItem(compassItem());
+					}
+					if(plugin.getConfig().getBoolean("torch_on_spawn"))
+					{
+						p.getInventory().clear();
+						p.getInventory().addItem(onTorch());
+					}
+				}
 			}
 			catch (Exception ex)
 			{
 				Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
-			}
-		}
-		if(p.getWorld().equals(w))
-		{
-			if(plugin.getConfig().getBoolean("compass_on_spawn"))
-			{
-				p.getInventory().clear();
-				p.getInventory().addItem(compassItem());
-			}
-			if(plugin.getConfig().getBoolean("torch_on_spawn"))
-			{
-				p.getInventory().clear();
-				p.getInventory().addItem(onTorch());
 			}
 		}
 	}
