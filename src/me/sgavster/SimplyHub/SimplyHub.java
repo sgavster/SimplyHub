@@ -44,24 +44,8 @@ public class SimplyHub extends JavaPlugin
 		
 		this.saveDefaultConfig();
 		
-		l.info("[SimplyHub] Config loaded. Checking for online mode.");
+		l.info("[SimplyHub] Enabled. Thank you for using SimplyHub!");
 		
-		if(getServer().getOnlineMode())
-		{
-			
-			l.info("[SimplyHub] Your server seems to be on online mode. SimplyHub now enabled. Thank you for using my plugin. - sgavster");
-			
-		}
-		else
-		{
-
-			l.info("[SimplyHub] Your server seems to be on offline mode. Disabling SimplyHub.");
-
-			Bukkit.getPluginManager().disablePlugin(this);
-
-			l.info("[SimplyHub] Plugin disabled.");
-
-		}
 	}
 	
 	public void onDisable()
