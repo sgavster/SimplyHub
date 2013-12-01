@@ -7,8 +7,6 @@ compass_enabled: true
 torch_on_spawn: true
 torch_enabled: true                        
 allow_player_pop: true
-hat_on_spawn: true
-allow_hats: true
 compass_item_1_enabled: true
 compass_item_2_enabled: true
 compass_item_3_enabled: true
@@ -39,10 +37,10 @@ compass_item_lore_6: '&8Soon'
 compass_item_lore_7: '&9Soon'
 compass_item_lore_8: '&1Soon'
 compass_item_lore_9: '&2Soon'
-toggle_players_torch_on_name: '&6Hide players'
-toggle_players_torch_off_name: '&6Show players'
-toggle_players_torch_on_lore: '&cRight click to use'
-toggle_players_torch_off_lore: '&cRight click to use'
+toggle_players_item_on_name: '&6Hide players'
+toggle_players_item_off_name: '&6Show players'
+toggle_players_item_on_lore: '&cRight click to use'
+toggle_players_item_off_lore: '&cRight click to use'
 #DO NOT ADD A / UNLESS THE COMMAND USES '//'.
 compass_item_command_1: 'command1'
 compass_item_command_2: 'command2'
@@ -59,10 +57,12 @@ pop_player_message: '&4POP!'
 hide_players_message: '&6You can no longer see players!'
 show_players_message: '&6You can now see players!'
 torch_on_cooldown_message: '&4You must wait to toggle players!'
+no_perms_message: '&4You do not have permission to do that command!'
 ##########################################################
 #Item Types:
 #A list of all VALID items: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html 
 #Caps do not matter. If you enter an invalid material, it will go to the default; ENDER_PEARL.
+compass_item: 'COMPASS'
 compass_item_1: 'ENDER_PEARL'
 compass_item_2: 'ENDER_PEARL'
 compass_item_3: 'ENDER_PEARL'
@@ -72,6 +72,9 @@ compass_item_6: 'ENDER_PEARL'
 compass_item_7: 'ENDER_PEARL'
 compass_item_8: 'ENDER_PEARL'
 compass_item_9: 'ENDER_PEARL'
+toggle_players_item_on: 'REDSTONE_TORCH_ON'
+toggle_players_item_off: 'REDSTONE_TORCH_OFF'
+########################################################
 #Other:
 #The torch delay is in seconds.
 torch_delay: 5

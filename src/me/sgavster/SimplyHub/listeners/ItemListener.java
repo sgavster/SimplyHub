@@ -26,24 +26,51 @@ public class ItemListener implements Listener
 	{
 		plugin = instance;
 	}
-
-	public ItemStack compassItem()
+	
+	public ItemStack compass()
 	{
-		ItemStack i = new ItemStack(Material.COMPASS);
-		ItemMeta m = i.getItemMeta();
-		m.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_name")));
-		i.setItemMeta(m);
-		return i;
+		Material m = Material.getMaterial(plugin.getConfig().getString("compass_item").toUpperCase());
+		if(m == null)
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe compass item is not correct! Going to default compass!");
+			ItemStack i = new ItemStack(Material.COMPASS);
+			ItemMeta t = i.getItemMeta();
+			t.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_name")));
+			i.setItemMeta(t);
+			return i;
+		}
+		else
+		{
+			ItemStack i = new ItemStack(m);
+			ItemMeta t = i.getItemMeta();
+			t.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_name")));
+			i.setItemMeta(t);
+			return i;
+		}
 	}
 
 	public ItemStack onTorch()
 	{
-		ItemStack t = new ItemStack(Material.REDSTONE_TORCH_ON);
-		ItemMeta i = t.getItemMeta();
-		i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_on_name")));
-		i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_on_lore"))));
-		t.setItemMeta(i);
-		return t;
+		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_on").toUpperCase());
+		if(m == null)
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default REDSTONE_TORCH_ON");
+			ItemStack t = new ItemStack(Material.REDSTONE_TORCH_ON);
+			ItemMeta i = t.getItemMeta();
+			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
+			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore"))));
+			t.setItemMeta(i);
+			return t;
+		}
+		else
+		{
+			ItemStack t = new ItemStack(m);
+			ItemMeta i = t.getItemMeta();
+			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
+			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore"))));
+			t.setItemMeta(i);
+			return t;	
+		}
 	}
 
 	@EventHandler
@@ -58,14 +85,13 @@ public class ItemListener implements Listener
 				World w = Bukkit.getWorld(s);
 				if(p.getWorld().equals(w))
 				{
+					p.getInventory().clear();
 					if(plugin.getConfig().getBoolean("compass_on_spawn"))
 					{
-						p.getInventory().clear();
-						p.getInventory().addItem(compassItem());
+						p.getInventory().addItem(compass());
 					}
 					if(plugin.getConfig().getBoolean("torch_on_spawn"))
 					{
-						p.getInventory().clear();
 						p.getInventory().addItem(onTorch());
 					}
 				}

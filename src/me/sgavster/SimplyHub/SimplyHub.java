@@ -2,6 +2,7 @@ package me.sgavster.SimplyHub;
 
 import java.util.logging.Logger;
 
+import me.sgavster.SimplyHub.commands.CommandSH;
 import me.sgavster.SimplyHub.listeners.CompassListener;
 import me.sgavster.SimplyHub.listeners.ItemListener;
 import me.sgavster.SimplyHub.listeners.PopHandler;
@@ -14,33 +15,20 @@ public class SimplyHub extends JavaPlugin
 {
 
 	private final Logger l = Logger.getLogger("Minecraft");
-	
-	/**
-	 * [IDEAS:]
-	 * 
-	 * 1. Pop players (config)                            = done =
-	 * 
-	 * 2. Torch (Config)                                  = done =
-	 * 
-	 * 3. Compass (to switch servers) (config)            = done = 
-	 * 
-	 * 4. Hats (config)
-	 * 
-	 * 5. More soon!
-	 * 
-	 * [/IDEAS:]
-	 */
 
 	public void onEnable()
 	{
-		l.info("[SimplyHub] Enabled. Registering events.");
-		
+		l.info("[SimplyHub] Enabled. Registering events & commands.");
+
 		Bukkit.getPluginManager().registerEvents(new CompassListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new PopHandler(this), this);
 		Bukkit.getPluginManager().registerEvents(new TogglePlayerListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new ItemListener(this), this);
+		CommandSH s = new CommandSH(this);
+		getCommand("simplyhub").setExecutor(s);
+		getCommand("sh").setExecutor(s);
 		
-		l.info("[SimplyHub] Events registered. Loading config.");
+		l.info("[SimplyHub] Events & commands registered. Loading config.");
 		
 		this.saveDefaultConfig();
 		

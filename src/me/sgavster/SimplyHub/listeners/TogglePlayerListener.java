@@ -37,22 +37,82 @@ public class TogglePlayerListener implements Listener
 
 	public ItemStack offTorch()
 	{
-		ItemStack t = new ItemStack(Material.REDSTONE_TORCH_OFF);
-		ItemMeta i = t.getItemMeta();
-		i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_off_name")));
-		i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_off_lore"))));
-		t.setItemMeta(i);
-		return t;
+		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_off").toUpperCase());
+		if(m == null)
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item off item is wrong! Going to default REDSTONE_TORCH_OFF");
+			ItemStack t = new ItemStack(Material.REDSTONE_TORCH_OFF);
+			ItemMeta i = t.getItemMeta();
+			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_off_name")));
+			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_off_lore"))));
+			t.setItemMeta(i);
+			return t;
+		}
+		else
+		{
+			ItemStack t = new ItemStack(m);
+			ItemMeta i = t.getItemMeta();
+			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_off_name")));
+			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_off_lore"))));
+			t.setItemMeta(i);
+			return t;
+		}
 	}
 
 	public ItemStack onTorch()
 	{
-		ItemStack t = new ItemStack(Material.REDSTONE_TORCH_ON);
-		ItemMeta i = t.getItemMeta();
-		i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_on_name")));
-		i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_torch_on_lore"))));
-		t.setItemMeta(i);
-		return t;
+		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_on").toUpperCase());
+		if(m == null)
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default REDSTONE_TORCH_ON");
+			ItemStack t = new ItemStack(Material.REDSTONE_TORCH_ON);
+			ItemMeta i = t.getItemMeta();
+			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
+			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore"))));
+			t.setItemMeta(i);
+			return t;
+		}
+		else
+		{
+			ItemStack t = new ItemStack(m);
+			ItemMeta i = t.getItemMeta();
+			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
+			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore"))));
+			t.setItemMeta(i);
+			return t;	
+		}
+	}
+
+	public Material item()
+	{
+		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_on").toUpperCase());
+		if(m == null)
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default REDSTONE_TORCH_ON");
+			Material mat = Material.REDSTONE_TORCH_ON;
+			return mat;
+		}
+		else
+		{
+			Material mat = m;
+			return mat;
+		}
+	}
+
+	public Material item2()
+	{
+		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_off").toUpperCase());
+		if(m == null)
+		{
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item off item is wrong! Going to default REDSTONE_TORCH_OFF");
+			Material mat = Material.REDSTONE_TORCH_OFF;
+			return mat;
+		}
+		else
+		{
+			Material mat = m;
+			return mat;
+		}
 	}
 
 	@EventHandler
@@ -71,7 +131,7 @@ public class TogglePlayerListener implements Listener
 						World w = Bukkit.getWorld(s);
 						if(p.getWorld().equals(w))
 						{
-							if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_ON)
+							if(p.getItemInHand().getType().equals(item()))
 							{
 								if(!h.contains(p.getName()))
 								{
@@ -85,13 +145,19 @@ public class TogglePlayerListener implements Listener
 										p.hidePlayer(o);
 										p.setItemInHand(offTorch());
 										p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("hide_players_message")));
-										c.add(p.getName());
+										if(!p.hasPermission("simplyhub.cooldown.exempt"))
+										{
+											c.add(p.getName());
+										}
 										p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
 										Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
 										{
 											public void run()
 											{
-												c.remove(p.getName());
+												if(c.contains(p.getName()))
+												{
+													c.remove(p.getName());
+												}
 											}
 										}, plugin.getConfig().getInt("torch_delay") * 20);
 									}
@@ -101,7 +167,7 @@ public class TogglePlayerListener implements Listener
 									p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("torch_on_cooldown_message")));
 								}
 							}
-							else if(p.getItemInHand().getType() == Material.REDSTONE_TORCH_OFF)
+							else if(p.getItemInHand().getType().equals(item2()))
 							{
 								if(!h.contains(p.getName()))
 								{
@@ -115,13 +181,19 @@ public class TogglePlayerListener implements Listener
 										p.showPlayer(o);
 										p.setItemInHand(onTorch());
 										p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
-										c.add(p.getName());
+										if(!p.hasPermission("simplyhub.cooldown.exempt"))
+										{
+											c.add(p.getName());
+										}
 										p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
 										Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
 										{
 											public void run()
 											{
-												c.remove(p.getName());
+												if(c.contains(p.getName()))
+												{
+													c.remove(p.getName());
+												}
 											}
 										}, plugin.getConfig().getInt("torch_delay") * 20);
 									}

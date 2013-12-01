@@ -1,4 +1,8 @@
 name: SimplyHub
 main: me.sgavster.SimplyHub.SimplyHub
-version: 1.3
+version: 1.5
 commands:
+  simplyhub:
+    description: All SimplyHub commands
+  sh:
+    description: All SimplyHub commands    

@@ -239,6 +239,21 @@ public class CompassListener implements Listener
 			return is;
 		}
 	}
+	
+	public Material compass()
+	{
+		Material m = Material.getMaterial(plugin.getConfig().getString("compass_item").toUpperCase());
+		if(m == null)
+		{
+			Material mat = Material.COMPASS;
+			return mat;
+		}
+		else
+		{
+			Material mat = m;
+			return mat;
+		}
+	}
 
 
 	@EventHandler
@@ -249,7 +264,7 @@ public class CompassListener implements Listener
 			if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
 			{
 				Player p = e.getPlayer();
-				if(p.getItemInHand().getType() == Material.COMPASS)
+				if(p.getItemInHand().getType().equals(compass()))
 				{
 
 					List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
