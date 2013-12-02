@@ -7,6 +7,7 @@ compass_enabled: true
 torch_on_spawn: true
 torch_enabled: true                        
 allow_player_pop: true
+clear_inv_on_spawn: true
 compass_item_1_enabled: true
 compass_item_2_enabled: true
 compass_item_3_enabled: true
@@ -58,6 +59,16 @@ hide_players_message: '&6You can no longer see players!'
 show_players_message: '&6You can now see players!'
 torch_on_cooldown_message: '&4You must wait to toggle players!'
 no_perms_message: '&4You do not have permission to do that command!'
+#If you do not want a message, put 'null'.
+compass_item_message_1: '&1message1'
+compass_item_message_2: '&3message2'
+compass_item_message_3: '&7message3'
+compass_item_message_4: '&9message4'
+compass_item_message_5: '&2message5'
+compass_item_message_6: '&6message6'
+compass_item_message_7: '&5message7'
+compass_item_message_8: '&bmessage8'
+compass_item_message_9: '&amessage9'
 ##########################################################
 #Item Types:
 #A list of all VALID items: http://jd.bukkit.org/rb/apidocs/org/bukkit/Material.html 

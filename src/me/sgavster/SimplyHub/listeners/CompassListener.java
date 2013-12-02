@@ -239,7 +239,7 @@ public class CompassListener implements Listener
 			return is;
 		}
 	}
-	
+
 	public Material compass()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("compass_item").toUpperCase());
@@ -353,38 +353,74 @@ public class CompassListener implements Listener
 										if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_1"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_1"));
+											if(!plugin.getConfig().getString("compass_item_message_1").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_1")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_2"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_2"));
+											if(!plugin.getConfig().getString("compass_item_message_2").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_2")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_3"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_3"));
+											if(!plugin.getConfig().getString("compass_item_message_3").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_3")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_4"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_4"));
+											if(!plugin.getConfig().getString("compass_item_message_4").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_4")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_5"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_5"));
+											if(!plugin.getConfig().getString("compass_item_message_5").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_5")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_6"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_6"));
+											if(!plugin.getConfig().getString("compass_item_message_6").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_6")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_7"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_7"));
+											if(!plugin.getConfig().getString("compass_item_message_7").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_7")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_8"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_8"));
+											if(!plugin.getConfig().getString("compass_item_message_8").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_8")));
+											}
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_9"))))
 										{
 											p.chat("/" + plugin.getConfig().getString("compass_item_command_9"));
+											if(!plugin.getConfig().getString("compass_item_message_9").equalsIgnoreCase("null"))
+											{
+												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_9")));
+											}
 										}
 									}
 								}

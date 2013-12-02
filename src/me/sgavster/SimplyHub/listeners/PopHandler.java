@@ -30,7 +30,6 @@ public class PopHandler implements Listener
 		plugin = instance; 
 	}
 
-	private World w;
 	FireworkEffectPlayer f = new FireworkEffectPlayer();
 
 	@EventHandler
@@ -45,7 +44,7 @@ public class PopHandler implements Listener
 				{
 					try
 					{
-						w = Bukkit.getWorld(s);
+						World w = Bukkit.getWorld(s);
 						Player d = (Player) e.getDamager();
 						Player p = (Player) e.getEntity();
 						if(p.getWorld().equals(w))
@@ -53,17 +52,17 @@ public class PopHandler implements Listener
 							try 
 							{
 								f.playFirework(d.getWorld(), d.getLocation(), FireworkEffect.builder().flicker(false).trail(false).with(Type.BURST).withColor(Color.ORANGE).withFade(Color.GREEN).build());
-							} 
-							catch (Exception e1) 
-							{
-								e1.printStackTrace();
+								d.getWorld().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 1);
+								d.getWorld().playEffect(p.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
+								d.getWorld().playEffect(p.getLocation(), Effect.SMOKE, 1);
+								d.getWorld().playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 10);
+								d.hidePlayer(p);
+								d.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("pop_player_message")));
 							}
-							d.getWorld().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 1);
-							d.getWorld().playEffect(p.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
-							d.getWorld().playEffect(p.getLocation(), Effect.SMOKE, 1);
-							d.getWorld().playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 10);
-							d.hidePlayer(p);
-							d.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("pop_player_message")));
+							catch (Exception ex)
+							{
+								Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] Could not play firework!");
+							}
 						}
 					}
 					catch (Exception ex)

@@ -25,7 +25,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TogglePlayerListener implements Listener
 {
 
-	public static SimplyHub plugin;
+	public final SimplyHub plugin;
 
 	public TogglePlayerListener(SimplyHub instance)
 	{
@@ -119,9 +119,9 @@ public class TogglePlayerListener implements Listener
 	public void onToggle(PlayerInteractEvent e)
 	{
 		final Player p = e.getPlayer();
-		if(plugin.getConfig().getBoolean("torch_enabled"))
+		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
-			if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+			if(plugin.getConfig().getBoolean("torch_enabled"))
 			{
 				List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
 				for(String s : list)

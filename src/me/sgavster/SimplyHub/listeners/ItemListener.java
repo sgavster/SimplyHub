@@ -26,7 +26,7 @@ public class ItemListener implements Listener
 	{
 		plugin = instance;
 	}
-	
+
 	public ItemStack compass()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("compass_item").toUpperCase());
@@ -85,7 +85,10 @@ public class ItemListener implements Listener
 				World w = Bukkit.getWorld(s);
 				if(p.getWorld().equals(w))
 				{
-					p.getInventory().clear();
+					if(plugin.getConfig().getBoolean("clear_inv_on_spawn"))
+					{
+						p.getInventory().clear();
+					}
 					if(plugin.getConfig().getBoolean("compass_on_spawn"))
 					{
 						p.getInventory().addItem(compass());
