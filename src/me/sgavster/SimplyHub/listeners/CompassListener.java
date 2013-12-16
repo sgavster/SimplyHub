@@ -267,7 +267,7 @@ public class CompassListener implements Listener
 				if(p.getItemInHand().getType().equals(compass()))
 				{
 
-					List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+					List<String> list = plugin.getConfig().getStringList("Compass_Allowed_Worlds");
 					for(String s : list)
 					{
 						try
@@ -319,7 +319,7 @@ public class CompassListener implements Listener
 						}
 						catch (Exception ex)
 						{
-							Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
+							Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Compass_Allowed_Worlds is wrong!");
 						}
 					}
 				}
@@ -341,7 +341,7 @@ public class CompassListener implements Listener
 					{
 						if(e.getCurrentItem().getItemMeta().hasDisplayName())
 						{
-							List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+							List<String> list = plugin.getConfig().getStringList("Compass_Allowed_Worlds");
 							for(String s : list)
 							{
 								try
@@ -352,7 +352,10 @@ public class CompassListener implements Listener
 										e.setCancelled(true);
 										if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_1"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_1"));
+											if(!plugin.getConfig().getString("compass_item_command_1").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_1"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_1").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_1")));
@@ -360,7 +363,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_2"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_2"));
+											if(!plugin.getConfig().getString("compass_item_command_2").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_2"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_2").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_2")));
@@ -368,7 +374,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_3"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_3"));
+											if(!plugin.getConfig().getString("compass_item_command_3").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_3"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_3").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_3")));
@@ -376,7 +385,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_4"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_4"));
+											if(!plugin.getConfig().getString("compass_item_command_4").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_4"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_4").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_4")));
@@ -384,7 +396,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_5"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_5"));
+											if(!plugin.getConfig().getString("compass_item_command_5").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_5"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_5").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_5")));
@@ -392,7 +407,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_6"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_6"));
+											if(!plugin.getConfig().getString("compass_item_command_6").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_6"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_6").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_6")));
@@ -400,7 +418,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_7"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_7"));
+											if(!plugin.getConfig().getString("compass_item_command_7").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_7"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_7").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_7")));
@@ -408,7 +429,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_8"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_8"));
+											if(!plugin.getConfig().getString("compass_item_command_8").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_8"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_8").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_8")));
@@ -416,7 +440,10 @@ public class CompassListener implements Listener
 										}
 										else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_name_9"))))
 										{
-											p.chat("/" + plugin.getConfig().getString("compass_item_command_9"));
+											if(!plugin.getConfig().getString("compass_item_command_9").equalsIgnoreCase("null"))
+											{
+												p.chat("/" + plugin.getConfig().getString("compass_item_command_9"));
+											}
 											if(!plugin.getConfig().getString("compass_item_message_9").equalsIgnoreCase("null"))
 											{
 												p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_item_message_9")));

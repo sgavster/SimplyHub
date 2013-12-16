@@ -35,13 +35,13 @@ public class TogglePlayerListener implements Listener
 	public ArrayList<String> h = new ArrayList<String>();
 	public ArrayList<String> c = new ArrayList<String>();
 
-	public ItemStack offTorch()
+	public ItemStack toggleOff()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_off").toUpperCase());
 		if(m == null)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item off item is wrong! Going to default REDSTONE_TORCH_OFF");
-			ItemStack t = new ItemStack(Material.REDSTONE_TORCH_OFF);
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item off item is wrong! Going to default MAGMA_CREAM");
+			ItemStack t = new ItemStack(Material.MAGMA_CREAM);
 			ItemMeta i = t.getItemMeta();
 			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_off_name")));
 			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_off_lore"))));
@@ -59,13 +59,13 @@ public class TogglePlayerListener implements Listener
 		}
 	}
 
-	public ItemStack onTorch()
+	public ItemStack toggleOn()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_on").toUpperCase());
 		if(m == null)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default REDSTONE_TORCH_ON");
-			ItemStack t = new ItemStack(Material.REDSTONE_TORCH_ON);
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default SLIME_BALL");
+			ItemStack t = new ItemStack(Material.SLIME_BALL);
 			ItemMeta i = t.getItemMeta();
 			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
 			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore"))));
@@ -88,8 +88,8 @@ public class TogglePlayerListener implements Listener
 		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_on").toUpperCase());
 		if(m == null)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default REDSTONE_TORCH_ON");
-			Material mat = Material.REDSTONE_TORCH_ON;
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default SLIME_BALL");
+			Material mat = Material.SLIME_BALL;
 			return mat;
 		}
 		else
@@ -104,8 +104,8 @@ public class TogglePlayerListener implements Listener
 		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_off").toUpperCase());
 		if(m == null)
 		{
-			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item off item is wrong! Going to default REDSTONE_TORCH_OFF");
-			Material mat = Material.REDSTONE_TORCH_OFF;
+			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item off item is wrong! Going to default MAGMA_CREAM");
+			Material mat = Material.MAGMA_CREAM;
 			return mat;
 		}
 		else
@@ -123,7 +123,7 @@ public class TogglePlayerListener implements Listener
 		{
 			if(plugin.getConfig().getBoolean("torch_enabled"))
 			{
-				List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+				List<String> list = plugin.getConfig().getStringList("Toggle_Players_Allowed_Worlds");
 				for(String s : list)
 				{
 					try
@@ -140,26 +140,29 @@ public class TogglePlayerListener implements Listener
 								e.setCancelled(true);
 								if(!c.contains(p.getName()))
 								{
+									p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("hide_players_message")));
+									p.playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
 									for(Player o : Bukkit.getOnlinePlayers())
 									{
-										p.hidePlayer(o);
-										p.setItemInHand(offTorch());
-										p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("hide_players_message")));
-										if(!p.hasPermission("simplyhub.cooldown.exempt"))
+										if(!o.hasPermission("simplyhub.hide.exempt"))
 										{
-											c.add(p.getName());
-										}
-										p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
-										Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-										{
-											public void run()
+											p.hidePlayer(o);
+											p.setItemInHand(toggleOff());
+											if(!p.hasPermission("simplyhub.cooldown.exempt"))
 											{
-												if(c.contains(p.getName()))
-												{
-													c.remove(p.getName());
-												}
+												c.add(p.getName());
 											}
-										}, plugin.getConfig().getInt("torch_delay") * 20);
+											Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
+											{
+												public void run()
+												{
+													if(c.contains(p.getName()))
+													{
+														c.remove(p.getName());
+													}
+												}
+											}, plugin.getConfig().getInt("torch_delay") * 20);
+										}
 									}
 								}
 								else
@@ -176,16 +179,16 @@ public class TogglePlayerListener implements Listener
 								e.setCancelled(true);
 								if(!c.contains(p.getName()))
 								{
+									p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
+									p.playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
 									for(Player o : Bukkit.getOnlinePlayers())
 									{
 										p.showPlayer(o);
-										p.setItemInHand(onTorch());
-										p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
+										p.setItemInHand(toggleOn());
 										if(!p.hasPermission("simplyhub.cooldown.exempt"))
 										{
 											c.add(p.getName());
 										}
-										p.getWorld().playSound(p.getLocation(), Sound.FIZZ, 1.0F, 10F);
 										Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
 										{
 											public void run()
@@ -207,7 +210,7 @@ public class TogglePlayerListener implements Listener
 					}
 					catch (Exception ex)
 					{
-						Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
+						Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Toggle_Players_Allowed_Worlds is wrong!");
 					}
 				}
 			}

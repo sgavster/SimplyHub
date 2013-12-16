@@ -8,6 +8,7 @@ torch_on_spawn: true
 torch_enabled: true                        
 allow_player_pop: true
 clear_inv_on_spawn: true
+firework_pop: true
 compass_item_1_enabled: true
 compass_item_2_enabled: true
 compass_item_3_enabled: true
@@ -54,11 +55,13 @@ compass_item_command_8: 'command8'
 compass_item_command_9: 'command9'
 #########################################################
 #Messages:
-pop_player_message: '&4POP!'
+#In the pop_player_message, %p% replaces as the player they popped
+pop_player_message: '&6You popped &2%p%&6!'
 hide_players_message: '&6You can no longer see players!'
 show_players_message: '&6You can now see players!'
 torch_on_cooldown_message: '&4You must wait to toggle players!'
 no_perms_message: '&4You do not have permission to do that command!'
+no_pop_message: '&4You can not pop that player!'
 #If you do not want a message, put 'null'.
 compass_item_message_1: '&1message1'
 compass_item_message_2: '&3message2'
@@ -90,5 +93,9 @@ toggle_players_item_off: 'REDSTONE_TORCH_OFF'
 #The torch delay is in seconds.
 torch_delay: 5
 #This is a list. This needs SPACES. Not tabs
-Enabled_Worlds:
+Compass_Allowed_Worlds:
   - 'world'
+Toggle_Players_Allowed_Worlds:
+  - 'world'  
+Spawn_Items_Allowed_Worlds:
+  - 'world'    

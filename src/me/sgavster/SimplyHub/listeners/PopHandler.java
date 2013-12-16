@@ -14,11 +14,13 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 public class PopHandler implements Listener
 {
@@ -32,6 +34,7 @@ public class PopHandler implements Listener
 
 	FireworkEffectPlayer f = new FireworkEffectPlayer();
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent e)
 	{
@@ -39,7 +42,7 @@ public class PopHandler implements Listener
 		{
 			if(e.getEntity() instanceof Player && e.getDamager() instanceof Player)
 			{
-				List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
+				List<String> list = plugin.getConfig().getStringList("Toggle_Players_Allowed_Worlds");
 				for(String s : list)
 				{
 					try
@@ -49,15 +52,30 @@ public class PopHandler implements Listener
 						Player p = (Player) e.getEntity();
 						if(p.getWorld().equals(w))
 						{
+							e.setCancelled(true);
 							try 
 							{
-								f.playFirework(d.getWorld(), d.getLocation(), FireworkEffect.builder().flicker(false).trail(false).with(Type.BURST).withColor(Color.ORANGE).withFade(Color.GREEN).build());
-								d.getWorld().playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 1);
-								d.getWorld().playEffect(p.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
-								d.getWorld().playEffect(p.getLocation(), Effect.SMOKE, 1);
-								d.getWorld().playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 10);
-								d.hidePlayer(p);
-								d.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("pop_player_message")));
+								if(p.hasPermission("simplyhub.hide.exempt"))
+								{
+									d.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("no_pop_message")));
+								}
+								else
+								{
+									if(plugin.getConfig().getBoolean("firework_pop"))
+									{
+										Firework firework = p.getWorld().spawn(p.getLocation(), Firework.class);
+										FireworkMeta data = (FireworkMeta) firework.getFireworkMeta();
+										data.addEffects(FireworkEffect.builder().flicker(false).trail(false).with(Type.BURST).withColor(Color.BLUE).withFade(Color.WHITE).build());
+										firework.setFireworkMeta(data);
+										firework.detonate();
+									}
+									d.playEffect(p.getLocation(), Effect.ENDER_SIGNAL, 1);
+									d.playEffect(p.getLocation(), Effect.MOBSPAWNER_FLAMES, 1);
+									d.playEffect(p.getLocation(), Effect.SMOKE, 1);
+									d.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 10);
+									d.hidePlayer(p);
+									d.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("pop_player_message").replace("%p%", p.getName())));
+								}
 							}
 							catch (Exception ex)
 							{
@@ -67,7 +85,7 @@ public class PopHandler implements Listener
 					}
 					catch (Exception ex)
 					{
-						Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Enabled_Worlds is wrong!");
+						Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Toggle_Players_Allowed_Worlds is wrong!");
 					}
 				}
 			}
