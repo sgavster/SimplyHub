@@ -8,6 +8,7 @@ import me.sgavster.SimplyHub.listeners.TogglePlayerListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -107,6 +108,8 @@ public class CommandSH implements CommandExecutor
 				sender.sendMessage("/simplyhub reload");
 				sender.sendMessage("/simplyhub give <player> compass|toggleplayeron|toggleplayeroff");
 				sender.sendMessage("/simplyhub showplayers");
+				sender.sendMessage("/simplyhub sethub");
+				sender.sendMessage("/simplhhub hub");
 			} 
 			else
 			{
@@ -184,6 +187,39 @@ public class CommandSH implements CommandExecutor
 							p.showPlayer(o);
 						}
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("show_players_message")));
+					}
+				}
+				else if(args[0].equalsIgnoreCase("sethub"))
+				{
+					Player p = (Player) sender;
+					if(p.hasPermission("simplyhub.sethub"))
+					{
+						plugin.getConfig().set("login_tp_location.world", p.getLocation().getWorld().getName());
+						plugin.getConfig().set("login_tp_location.x", p.getLocation().getBlockX());
+						plugin.getConfig().set("login_tp_location.y", p.getLocation().getBlockY());
+						plugin.getConfig().set("login_tp_location.z", p.getLocation().getBlockZ());
+						plugin.saveConfig();
+						p.sendMessage("§6You set the hub.");
+					}
+					else
+					{
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("no_perms_message")));
+					}
+				}
+				else if(args[0].equalsIgnoreCase("hub"))
+				{
+					Player p = (Player) sender;
+					if(p.hasPermission("simplyhub.hub"))
+					{
+						String w = plugin.getConfig().getString("login_tp_location.world");
+						int x = plugin.getConfig().getInt("login_tp_location.x");
+						int y = plugin.getConfig().getInt("login_tp_location.y");
+						int z = plugin.getConfig().getInt("login_tp_location.z");
+						p.teleport(new Location(Bukkit.getWorld(w), x, y, z));
+					}
+					else
+					{
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("no_perms_message")));
 					}
 				}
 				else

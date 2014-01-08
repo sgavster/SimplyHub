@@ -8,6 +8,7 @@ import me.sgavster.SimplyHub.SimplyHub;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -104,6 +105,19 @@ public class ItemListener implements Listener
 			{
 				Bukkit.getLogger().log(Level.SEVERE, "§c[SimplyHub] the config list Spawn_Items_Allowed_Worlds is wrong!");
 			}
+		}
+	}
+	
+	@EventHandler
+	public void tp(PlayerJoinEvent e)
+	{
+		if(plugin.getConfig().getBoolean("tp_to_location_on_spawn"))
+		{
+			String w = plugin.getConfig().getString("login_tp_location.world");
+			int x = plugin.getConfig().getInt("login_tp_location.x");
+			int y = plugin.getConfig().getInt("login_tp_location.y");
+			int z = plugin.getConfig().getInt("login_tp_location.z");
+			e.getPlayer().teleport(new Location(Bukkit.getWorld(w), x, y, z));
 		}
 	}
 	

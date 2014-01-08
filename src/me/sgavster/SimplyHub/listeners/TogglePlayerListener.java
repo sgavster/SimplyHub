@@ -172,9 +172,9 @@ public class TogglePlayerListener implements Listener
 							}
 							else if(p.getItemInHand().getType().equals(item2()))
 							{
-								if(!h.contains(p.getName()))
+								if(h.contains(p.getName()))
 								{
-									h.add(p.getName());
+									h.remove(p.getName());
 								}
 								e.setCancelled(true);
 								if(!c.contains(p.getName()))
@@ -223,6 +223,10 @@ public class TogglePlayerListener implements Listener
 		if(h.contains(e.getPlayer().getName()))
 		{
 			h.remove(e.getPlayer().getName());
+			for(Player p : Bukkit.getOnlinePlayers())
+			{
+				e.getPlayer().showPlayer(p);
+			}
 		}
 	}
 
@@ -246,6 +250,18 @@ public class TogglePlayerListener implements Listener
 			for(Player p : Bukkit.getOnlinePlayers())
 			{
 				e.getPlayer().showPlayer(p);
+				h.remove(e.getPlayer().getName());
+			}
+		}
+	}
+	@EventHandler
+	public void update(PlayerJoinEvent e)
+	{
+		for(Player p : Bukkit.getOnlinePlayers())
+		{
+			if(!h.contains(p.getName()))
+			{
+				p.showPlayer(e.getPlayer());
 			}
 		}
 	}

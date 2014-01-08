@@ -9,6 +9,7 @@ torch_enabled: true
 allow_player_pop: true
 clear_inv_on_spawn: true
 firework_pop: true
+tp_to_location_on_spawn: true
 compass_item_1_enabled: true
 compass_item_2_enabled: true
 compass_item_3_enabled: true
@@ -98,4 +99,10 @@ Compass_Allowed_Worlds:
 Toggle_Players_Allowed_Worlds:
   - 'world'  
 Spawn_Items_Allowed_Worlds:
-  - 'world'    
+  - 'world' 
+login_tp_location:
+  world: 'world'
+  x: '0'
+  y: '64'
+  z: '0'
+         
