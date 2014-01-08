@@ -13,12 +13,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SimplyHub extends JavaPlugin
 {
-
 	private final Logger l = Logger.getLogger("Minecraft");
 
 	public void onEnable()
 	{
-		l.info("[SimplyHub] Enabled. Registering events & commands.");
+		this.l.info("[SimplyHub] Enabled. Registering events & commands.");
 
 		Bukkit.getPluginManager().registerEvents(new CompassListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new PopHandler(this), this);
@@ -27,18 +26,17 @@ public class SimplyHub extends JavaPlugin
 		CommandSH s = new CommandSH(this);
 		getCommand("simplyhub").setExecutor(s);
 		getCommand("sh").setExecutor(s);
-		
-		l.info("[SimplyHub] Events & commands registered. Loading config.");
-		
-		this.saveDefaultConfig();
-		
-		l.info("[SimplyHub] Enabled. Thank you for using SimplyHub!");
-		
+
+		this.l.info("[SimplyHub] Events & commands registered. Loading config.");
+
+		saveDefaultConfig();
+
+		this.l.info("[SimplyHub] Enabled. Thank you for using SimplyHub!");
 	}
-	
+
 	public void onDisable()
 	{
-		l.info("[SimplyHub] Thank you for using SimplyHub! Disabling...");
-		l.info("[SimplyHub] ...Disabled.");
+		this.l.info("[SimplyHub] Thank you for using SimplyHub! Disabling...");
+		this.l.info("[SimplyHub] ...Disabled.");
 	}
 }

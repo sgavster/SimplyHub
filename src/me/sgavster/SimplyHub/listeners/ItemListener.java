@@ -19,9 +19,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ItemListener implements Listener
+public class ItemListener
+implements Listener
 {
-
 	public static SimplyHub plugin;
 
 	public ItemListener(SimplyHub instance)
@@ -32,7 +32,7 @@ public class ItemListener implements Listener
 	public ItemStack compass()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("compass_item").toUpperCase());
-		if(m == null)
+		if (m == null)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "§cThe compass item is not correct! Going to default compass!");
 			ItemStack i = new ItemStack(Material.COMPASS);
@@ -41,38 +41,34 @@ public class ItemListener implements Listener
 			i.setItemMeta(t);
 			return i;
 		}
-		else
-		{
-			ItemStack i = new ItemStack(m);
-			ItemMeta t = i.getItemMeta();
-			t.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_name")));
-			i.setItemMeta(t);
-			return i;
-		}
+
+		ItemStack i = new ItemStack(m);
+		ItemMeta t = i.getItemMeta();
+		t.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("compass_name")));
+		i.setItemMeta(t);
+		return i;
 	}
 
 	public ItemStack toggleOn()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_on").toUpperCase());
-		if(m == null)
+		if (m == null)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default SLIME_BALL");
 			ItemStack t = new ItemStack(Material.SLIME_BALL);
 			ItemMeta i = t.getItemMeta();
 			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
-			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore"))));
+			i.setLore(Arrays.asList(new String[] { ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore")) }));
 			t.setItemMeta(i);
 			return t;
 		}
-		else
-		{
-			ItemStack t = new ItemStack(m);
-			ItemMeta i = t.getItemMeta();
-			i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
-			i.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore"))));
-			t.setItemMeta(i);
-			return t;	
-		}
+
+		ItemStack t = new ItemStack(m);
+		ItemMeta i = t.getItemMeta();
+		i.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_name")));
+		i.setLore(Arrays.asList(new String[] { ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("toggle_players_item_on_lore")) }));
+		t.setItemMeta(i);
+		return t;
 	}
 
 	@EventHandler
@@ -80,24 +76,24 @@ public class ItemListener implements Listener
 	{
 		Player p = e.getPlayer();
 		List<String> list = plugin.getConfig().getStringList("Spawn_Items_Allowed_Worlds");
-		for(String s : list)
+		for (String s : list)
 		{
 			try
 			{
 				World w = Bukkit.getWorld(s);
-				if(p.getWorld().equals(w))
+				if (p.getWorld().equals(w))
 				{
-					if(plugin.getConfig().getBoolean("clear_inv_on_spawn") && !p.hasPermission("simplyhub.clearinv.exempt"))
+					if ((plugin.getConfig().getBoolean("clear_inv_on_spawn")) && (!p.hasPermission("simplyhub.clearinv.exempt")))
 					{
 						p.getInventory().clear();
 					}
-					if(plugin.getConfig().getBoolean("compass_on_spawn") && !p.getInventory().contains(compass()))
+					if ((plugin.getConfig().getBoolean("compass_on_spawn")) && (!p.getInventory().contains(compass())))
 					{
-						p.getInventory().addItem(compass());
+						p.getInventory().addItem(new ItemStack[] { compass() });
 					}
-					if(plugin.getConfig().getBoolean("torch_on_spawn") && !p.getInventory().contains(toggleOn()))
+					if ((plugin.getConfig().getBoolean("torch_on_spawn")) && (!p.getInventory().contains(toggleOn())))
 					{
-						p.getInventory().addItem(toggleOn());
+						p.getInventory().addItem(new ItemStack[] { toggleOn() });
 					}
 				}
 			}
@@ -107,11 +103,11 @@ public class ItemListener implements Listener
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void tp(PlayerJoinEvent e)
 	{
-		if(plugin.getConfig().getBoolean("tp_to_location_on_spawn"))
+		if (plugin.getConfig().getBoolean("tp_to_location_on_spawn"))
 		{
 			String w = plugin.getConfig().getString("login_tp_location.world");
 			int x = plugin.getConfig().getInt("login_tp_location.x");
@@ -120,83 +116,77 @@ public class ItemListener implements Listener
 			e.getPlayer().teleport(new Location(Bukkit.getWorld(w), x, y, z));
 		}
 	}
-	
+
 	public Material item()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_on").toUpperCase());
-		if(m == null)
+		if (m == null)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item on item is wrong! Going to default SLIME_BALL");
 			Material mat = Material.SLIME_BALL;
 			return mat;
 		}
-		else
-		{
-			Material mat = m;
-			return mat;
-		}
+
+		Material mat = m;
+		return mat;
 	}
 
 	public Material item2()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("toggle_players_item_off").toUpperCase());
-		if(m == null)
+		if (m == null)
 		{
 			Bukkit.getLogger().log(Level.SEVERE, "§cThe toggle players item off item is wrong! Going to default MAGMA_CREAM");
 			Material mat = Material.MAGMA_CREAM;
 			return mat;
 		}
-		else
-		{
-			Material mat = m;
-			return mat;
-		}
+
+		Material mat = m;
+		return mat;
 	}
-	
+
 	public Material item3()
 	{
 		Material m = Material.getMaterial(plugin.getConfig().getString("compass_item").toUpperCase());
-		if(m == null)
+		if (m == null)
 		{
 			Material mat = Material.COMPASS;
 			return mat;
 		}
-		else
-		{
-			Material mat = m;
-			return mat;
-		}
+
+		Material mat = m;
+		return mat;
 	}
-	
+
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent e)
 	{
 		Player p = e.getPlayer();
 		List<String> list = plugin.getConfig().getStringList("Enabled_Worlds");
-		for(String s : list)
+		for (String s : list)
 		{
 			try
 			{
 				World w = Bukkit.getWorld(s);
-				if(p.getWorld().equals(w))
+				if (p.getWorld().equals(w))
 				{
-					if(e.getItemDrop().getItemStack().getType().equals(item()))
+					if (e.getItemDrop().getItemStack().getType().equals(item()))
 					{
-						if(!p.hasPermission("simplyhub.toggleplayerson.drop"))
+						if (!p.hasPermission("simplyhub.toggleplayerson.drop"))
 						{
 							e.setCancelled(true);
 						}
 					}
-					else if(e.getItemDrop().getItemStack().getType().equals(item2()))
+					else if (e.getItemDrop().getItemStack().getType().equals(item2()))
 					{
-						if(!p.hasPermission("simplyhub.toggleplayersoff.drop"))
+						if (!p.hasPermission("simplyhub.toggleplayersoff.drop"))
 						{
 							e.setCancelled(true);
 						}
 					}
-					else if(e.getItemDrop().getItemStack().getType().equals(item3()))
+					else if (e.getItemDrop().getItemStack().getType().equals(item3()))
 					{
-						if(!p.hasPermission("simplyhub.compass.drop"))
+						if (!p.hasPermission("simplyhub.compass.drop"))
 						{
 							e.setCancelled(true);
 						}
